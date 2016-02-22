@@ -4,6 +4,11 @@ utils [![Build Status](https://travis-ci.org/issue9/utils.svg?branch=master)](ht
 utils包提供了一些常用的golang函数
 
 
+- MD5 生成md5编码；
+- FileExists 判断文件或是目录是否存在；
+- Merge 合并多个同类型的数据；
+
+
 
 ### 安装
 
