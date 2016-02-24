@@ -15,6 +15,7 @@ type s1 struct {
 	ID    int64
 	Value string
 	hide  int // 不可导出
+	Slice []int
 }
 
 type s2 struct {
@@ -76,4 +77,24 @@ func TestMergeNest(t *testing.T) {
 
 	a.NotError(merge(false, reflect.ValueOf(v1).Elem(), reflect.ValueOf(v2).Elem()))
 	a.Equal(v1.ID, 0).Equal(v1.S3.ID, 2).Equal(v1.S3.hide, 2)
+}
+
+func TestMergeSlice(t *testing.T) {
+	a := assert.New(t)
+
+	v1 := &s1{Slice: []int{1, 1}}
+	v2 := &s1{Slice: []int{2, 2}}
+	a.NotError(merge(true, reflect.ValueOf(v1).Elem(), reflect.ValueOf(v2).Elem()))
+	a.Equal(v1.Slice, []int{2, 2})
+
+	// 空值
+	v1.Slice = []int{1, 1}
+	v2.Slice = nil
+	a.NotError(merge(true, reflect.ValueOf(v1).Elem(), reflect.ValueOf(v2).Elem()))
+	a.Equal(v1.Slice, []int{1, 1})
+
+	// 长度为0
+	v2.Slice = []int{}
+	a.NotError(merge(true, reflect.ValueOf(v1).Elem(), reflect.ValueOf(v2).Elem()))
+	a.Equal(v1.Slice, []int{1, 1})
 }

@@ -48,7 +48,7 @@ func Merge(deep bool, elems ...interface{}) error {
 // 确保v1.Type()==v2.Type()
 // 若是map，则当作普通的成员变量，直接赋值。
 func merge(deep bool, v1, v2 reflect.Value) error {
-	if !v2.IsValid() {
+	if !v1.IsValid() || !v2.IsValid() {
 		return nil
 	}
 
@@ -74,6 +74,16 @@ func merge(deep bool, v1, v2 reflect.Value) error {
 			if !v1.Field(i).CanSet() { // 过滤不可导出字段
 				continue
 			}
+
+			k := v2.Field(i).Kind()
+			if k == reflect.Slice || k == reflect.Map || k == reflect.Array {
+				if v2.Field(i).Len() > 0 {
+					v1.Field(i).Set(v2.Field(i))
+				}
+				continue
+
+			}
+
 			// v2若是零值，则不合并
 			if v2.Field(i).Interface() == reflect.Zero(v2.Field(i).Type()).Interface() {
 				continue
