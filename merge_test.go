@@ -81,9 +81,16 @@ func TestMergeNest(t *testing.T) {
 	a.NotError(merge(false, reflect.ValueOf(v1).Elem(), reflect.ValueOf(v2).Elem()))
 	a.Equal(v1.ID, 0).Equal(v1.S3.ID, 2).Equal(v1.S3.hide, 2)
 
+	// 自动初始化v1.S3
 	v1.S3 = nil
 	a.NotError(merge(true, reflect.ValueOf(v1).Elem(), reflect.ValueOf(v2).Elem()))
 	a.Equal(v1.ID, 0).Equal(v1.S3.ID, 2).Equal(v1.S3.hide, 0)
+
+	// 不会初始化v1.S3
+	v1.S3 = nil
+	v2.S3 = nil
+	a.NotError(merge(true, reflect.ValueOf(v1).Elem(), reflect.ValueOf(v2).Elem()))
+	a.Equal(v1.ID, 0).Nil(v1.S3)
 }
 
 func TestMergeSlice(t *testing.T) {

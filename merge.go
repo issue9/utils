@@ -65,6 +65,9 @@ func merge(deep bool, v1, v2 reflect.Value) error {
 			}
 
 			if v1.Field(i).IsNil() { // v1为nil时，需要先初始化该结构体
+				if v2.Field(i).IsNil() { // 双方均为nil时，无须任何操作
+					continue
+				}
 				typ := v1.Field(i).Type().Elem()
 				v1.Field(i).Set(reflect.New(typ))
 			}
