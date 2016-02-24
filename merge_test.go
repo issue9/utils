@@ -72,11 +72,18 @@ func TestMergeNest(t *testing.T) {
 
 	v1 := &s2{S2: "1", S3: &s1{}}
 	v2 := &s2{S2: "2", S3: &s1{ID: 2, hide: 2}}
+
+	// deep 为true时，会依次赋值子元素，hide不可导出，所以被忽略
 	a.NotError(merge(true, reflect.ValueOf(v1).Elem(), reflect.ValueOf(v2).Elem()))
 	a.Equal(v1.ID, 0).Equal(v1.S3.ID, 2).Equal(v1.S3.hide, 0)
 
+	// deep为false时，会将整个v2.S3赋给给v1.S3
 	a.NotError(merge(false, reflect.ValueOf(v1).Elem(), reflect.ValueOf(v2).Elem()))
 	a.Equal(v1.ID, 0).Equal(v1.S3.ID, 2).Equal(v1.S3.hide, 2)
+
+	v1.S3 = nil
+	a.NotError(merge(true, reflect.ValueOf(v1).Elem(), reflect.ValueOf(v2).Elem()))
+	a.Equal(v1.ID, 0).Equal(v1.S3.ID, 2).Equal(v1.S3.hide, 0)
 }
 
 func TestMergeSlice(t *testing.T) {

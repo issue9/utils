@@ -60,8 +60,13 @@ func merge(deep bool, v1, v2 reflect.Value) error {
 			err = merge(deep, v1.Field(i), v2.Field(i))
 		case v1.Field(i).Kind() == reflect.Ptr:
 			if !deep {
-				v1.Field(i).Set(v2.Field(i))
+				v1.Field(i).Elem().Set(v2.Field(i).Elem())
 				continue
+			}
+
+			if v1.Field(i).IsNil() { // v1为nil时，需要先初始化该结构体
+				typ := v1.Field(i).Type().Elem()
+				v1.Field(i).Set(reflect.New(typ))
 			}
 			err = merge(true, v1.Field(i).Elem(), v2.Field(i).Elem())
 		case v1.Field(i).Kind() == reflect.Struct: // 嵌套
