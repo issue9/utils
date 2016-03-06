@@ -9,6 +9,7 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"os"
+	"path/filepath"
 )
 
 // 将一段字符串转换成md5编码
@@ -22,4 +23,31 @@ func MD5(str string) string {
 func FileExists(path string) bool {
 	_, err := os.Stat(path)
 	return err == nil || os.IsExist(err)
+}
+
+// 将路径按分隔符分隔成字符串数组。比如：
+//  /a/b/c  ==>  []string{"a", "b", "c"}
+func SplitPath(path string) []string {
+	vol := filepath.VolumeName(path)
+	ret := make([]string, 0, 10)
+
+	index := 0
+	if len(vol) > 0 {
+		ret = append(ret, vol)
+		path = path[len(vol)+1:]
+	}
+	for i := 0; i < len(path); i++ {
+		if os.IsPathSeparator(path[i]) {
+			if i > index {
+				ret = append(ret, path[index:i])
+			}
+			index = i + 1 // 过滤掉此符号
+		}
+	} // end for
+
+	if len(path) > index {
+		ret = append(ret, path[index:])
+	}
+
+	return ret
 }

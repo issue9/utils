@@ -5,6 +5,7 @@
 package utils
 
 import (
+	"runtime"
 	"testing"
 
 	"github.com/issue9/assert"
@@ -20,4 +21,24 @@ func TestFileExists(t *testing.T) {
 	// 测试文件夹
 	a.True(FileExists("./"))
 	a.False(FileExists("./unknown_dir/"))
+}
+
+func TestSplitPath(t *testing.T) {
+	a := assert.New(t)
+
+	a.Equal([]string{"a", "b"}, SplitPath("/a/b"))
+	a.Equal([]string{"a", "b", "c", "d"}, SplitPath("/a/b/c/d"))
+	a.Equal([]string{"a", "b", "c", "d"}, SplitPath("/a/b/c/d/"))
+	a.Equal([]string{"//host/a", "b"}, SplitPath("//host/a/b"))
+
+	if runtime.GOOS == "windows" {
+		a.Equal([]string{"a", "b"}, SplitPath("/a/b"))
+		a.Equal([]string{"a", "b", "c", "d"}, SplitPath("/a/b/c/d"))
+		a.Equal([]string{"a", "b", "c", "d"}, SplitPath("/a/b/c/d/"))
+
+		a.Equal([]string{"a", "b"}, SplitPath("\\a\\b"))
+		a.Equal([]string{"a", "b", "c", "d"}, SplitPath("\\a\\b\\c\\d"))
+		a.Equal([]string{"a", "b", "c", "d"}, SplitPath("\\a/b\\c\\d\\"))
+		a.Equal([]string{"c:", "a", "b"}, SplitPath("c:\\a\\b"))
+	}
 }
