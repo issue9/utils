@@ -29,12 +29,12 @@ func TestSplitPath(t *testing.T) {
 	a.Equal([]string{"a", "b"}, SplitPath("/a/b"))
 	a.Equal([]string{"a", "b", "c", "d"}, SplitPath("/a/b/c/d"))
 	a.Equal([]string{"a", "b", "c", "d"}, SplitPath("/a/b/c/d/"))
-	a.Equal([]string{"//host/a", "b"}, SplitPath("//host/a/b"))
 
 	if runtime.GOOS == "windows" {
 		a.Equal([]string{"a", "b"}, SplitPath("/a/b"))
 		a.Equal([]string{"a", "b", "c", "d"}, SplitPath("/a/b/c/d"))
 		a.Equal([]string{"a", "b", "c", "d"}, SplitPath("/a/b/c/d/"))
+		a.Equal([]string{"\\\\host\\a", "b"}, SplitPath("\\\\host\\a\\b"))
 
 		a.Equal([]string{"a", "b"}, SplitPath("\\a\\b"))
 		a.Equal([]string{"a", "b", "c", "d"}, SplitPath("\\a\\b\\c\\d"))
