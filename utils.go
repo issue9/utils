@@ -2,7 +2,7 @@
 // Use of this source code is governed by a MIT
 // license that can be found in the LICENSE file.
 
-// 一些常用的函数集合。
+// Package utils 一些常用的函数集合。
 package utils
 
 import (
@@ -12,20 +12,20 @@ import (
 	"path/filepath"
 )
 
-// 将一段字符串转换成md5编码
+// MD5 将一段字符串转换成md5编码
 func MD5(str string) string {
 	m := md5.New()
 	m.Write([]byte(str))
 	return hex.EncodeToString(m.Sum(nil))
 }
 
-// 判断文件或是文件夹是否存在
+// FileExists 判断文件或是文件夹是否存在
 func FileExists(path string) bool {
 	_, err := os.Stat(path)
 	return err == nil || os.IsExist(err)
 }
 
-// 将路径按分隔符分隔成字符串数组。比如：
+// SplitPath 将路径按分隔符分隔成字符串数组。比如：
 //  /a/b/c  ==>  []string{"a", "b", "c"}
 func SplitPath(path string) []string {
 	vol := filepath.VolumeName(path)

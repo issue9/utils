@@ -9,7 +9,7 @@ import (
 	"reflect"
 )
 
-// 合并所有的元素，后一个元素的非零值将取代前一个元素中的值。
+// Merge 合并所有的元素，后一个元素的非零值将取代前一个元素中的值。
 // deep 是否递归合并子元素。
 // 合并的元素只支持结构体或是结构体指针。
 func Merge(deep bool, elems ...interface{}) error {
