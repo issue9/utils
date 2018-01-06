@@ -6,10 +6,10 @@
 package utils
 
 import (
+	"bytes"
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
-	"io"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -29,16 +29,20 @@ func FileExists(path string) bool {
 }
 
 // TraceStack 打印堆栈信息
-func TraceStack(w io.Writer, msg interface{}, level int) {
+func TraceStack(msg interface{}, level int) []byte {
+	w := new(bytes.Buffer)
 	fmt.Fprintln(w, msg)
+
 	for i := level; true; i++ {
 		_, file, line, ok := runtime.Caller(i)
 		if !ok {
-			return
+			break
 		}
 
 		fmt.Fprintf(w, "@ %v:%v\n", file, line)
 	}
+
+	return w.Bytes()
 }
 
 // SplitPath 将路径按分隔符分隔成字符串数组。比如：
