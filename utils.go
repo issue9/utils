@@ -29,7 +29,7 @@ func FileExists(path string) bool {
 }
 
 // TraceStack 打印堆栈信息
-func TraceStack(w io.Writer, msg string, level int) {
+func TraceStack(w io.Writer, msg interface{}, level int) {
 	fmt.Fprintln(w, msg)
 	for i := level; true; i++ {
 		_, file, line, ok := runtime.Caller(i)
