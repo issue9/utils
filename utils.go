@@ -8,8 +8,11 @@ package utils
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"fmt"
+	"io"
 	"os"
 	"path/filepath"
+	"runtime"
 )
 
 // MD5 将一段字符串转换成md5编码
@@ -23,6 +26,18 @@ func MD5(str string) string {
 func FileExists(path string) bool {
 	_, err := os.Stat(path)
 	return err == nil || os.IsExist(err)
+}
+
+// TraceStack 打印堆栈信息
+func TraceStack(w io.Writer, level int) {
+	for i := level; true; i++ {
+		_, file, line, ok := runtime.Caller(i)
+		if !ok {
+			return
+		}
+
+		fmt.Fprintf(w, "@ %v:%v\n", file, line)
+	}
 }
 
 // SplitPath 将路径按分隔符分隔成字符串数组。比如：
