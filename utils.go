@@ -13,6 +13,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"strconv"
 )
 
 // MD5 将一段字符串转换成md5编码
@@ -28,10 +29,23 @@ func FileExists(path string) bool {
 	return err == nil || os.IsExist(err)
 }
 
-// TraceStack 打印堆栈信息
-func TraceStack(msg interface{}, level int) []byte {
+// TraceStack 返回调用者的堆栈信息
+func TraceStack(msg interface{}, level int) ([]byte, error) {
 	w := new(bytes.Buffer)
-	fmt.Fprintln(w, msg)
+	var err error
+
+	if msg != nil {
+		_, err = fmt.Fprintln(w, msg)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	ws := func(str string) {
+		if err == nil {
+			_, err = w.WriteString(str)
+		}
+	}
 
 	for i := level; true; i++ {
 		_, file, line, ok := runtime.Caller(i)
@@ -39,10 +53,16 @@ func TraceStack(msg interface{}, level int) []byte {
 			break
 		}
 
-		fmt.Fprintf(w, "@ %v:%v\n", file, line)
+		ws(file)
+		ws(strconv.Itoa(line))
+		ws("\n")
 	}
 
-	return w.Bytes()
+	if err != nil {
+		return nil, err
+	}
+
+	return w.Bytes(), nil
 }
 
 // SplitPath 将路径按分隔符分隔成字符串数组。比如：
