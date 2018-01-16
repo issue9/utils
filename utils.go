@@ -54,6 +54,7 @@ func TraceStack(msg interface{}, level int) ([]byte, error) {
 		}
 
 		ws(file)
+		ws(":")
 		ws(strconv.Itoa(line))
 		ws("\n")
 	}
