@@ -1,5 +1,21 @@
 language: go
+
+os:
+  - linux
+  - osx
+
 go:
-    - tip
-    - 1.5
-    - 1.4
+  - tip
+  - "1.10"
+
+script:
+  - go vet -v $(go list ./...| grep -v /vendor/)
+  - go test -v -coverprofile=coverage.txt -covermode=atomic $(go list ./...| grep -v /vendor/)
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+
+matrix:
+  allow_failures:
+    - go: tip
+
