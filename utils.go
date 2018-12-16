@@ -16,7 +16,7 @@ import (
 	"strings"
 )
 
-// MD5 将一段字符串转换成md5编码
+// MD5 将一段字符串转换成 md5 编码
 func MD5(str string) string {
 	m := md5.New()
 	m.Write([]byte(str))
