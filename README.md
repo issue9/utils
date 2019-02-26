@@ -1,6 +1,5 @@
 utils
 [![Build Status](https://travis-ci.org/issue9/utils.svg?branch=master)](https://travis-ci.org/issue9/utils)
-[![Build status](https://ci.appveyor.com/api/projects/status/6g7mg5yoq6cnv2ku?svg=true)](https://ci.appveyor.com/project/caixw/utils)
 ======
 
 utils包提供了一些常用的golang函数
