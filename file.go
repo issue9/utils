@@ -6,6 +6,7 @@ package utils
 
 import (
 	"go/format"
+	"io/ioutil"
 	"os"
 )
 
@@ -15,21 +16,6 @@ func FileExists(path string) bool {
 	return err == nil || os.IsExist(err)
 }
 
-// DumpFile 输出 content 到 path
-func DumpFile(path string, content []byte) error {
-	file, err := os.Create(path)
-	if err != nil {
-		return err
-	}
-
-	defer func() {
-		err = file.Close()
-	}()
-
-	_, err = file.Write(content)
-	return err
-}
-
 // DumpGoFile 输出 Go 源代码到 path
 func DumpGoFile(path, content string) error {
 	src, err := format.Source([]byte(content))
@@ -37,5 +23,5 @@ func DumpGoFile(path, content string) error {
 		return err
 	}
 
-	return DumpFile(path, src)
+	return ioutil.WriteFile(path, src, os.ModePerm)
 }
