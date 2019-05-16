@@ -3,7 +3,8 @@
 *.a
 *.so
 
-testdata/
+testdata/*
+!/testdata/.gitkeep
 
 *.exe
 *.test
