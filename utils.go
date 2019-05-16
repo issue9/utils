@@ -23,12 +23,6 @@ func MD5(str string) string {
 	return hex.EncodeToString(m.Sum(nil))
 }
 
-// FileExists 判断文件或是文件夹是否存在
-func FileExists(path string) bool {
-	_, err := os.Stat(path)
-	return err == nil || os.IsExist(err)
-}
-
 // TraceStack 返回调用者的堆栈信息
 func TraceStack(level int, msg ...interface{}) (string, error) {
 	var w strings.Builder
