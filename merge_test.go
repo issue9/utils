@@ -41,6 +41,16 @@ func TestMerge(t *testing.T) {
 	elems := []interface{}{v1, v2, v3}
 	a.NotError(Merge(true, elems...))
 	a.Equal(elems[0].(*s1).ID, 3).Equal(elems[0].(*s1).Value, "2")
+
+	// 参数太少
+	a.Panic(func() {
+		Merge(true, v1)
+	})
+
+	// 类型不同
+	a.Panic(func() {
+		Merge(true, v1, 5)
+	})
 }
 
 func TestMergeBase(t *testing.T) {

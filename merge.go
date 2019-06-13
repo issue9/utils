@@ -4,17 +4,14 @@
 
 package utils
 
-import (
-	"errors"
-	"reflect"
-)
+import "reflect"
 
 // Merge 合并所有的元素，后一个元素的非零值将取代前一个元素中的值。
 // deep 是否递归合并子元素。
 // 合并的元素只支持结构体或是结构体指针。
 func Merge(deep bool, elems ...interface{}) error {
 	if len(elems) < 2 {
-		return errors.New("参数elems数量必须大于1")
+		panic("参数 elems 数量必须大于 1")
 	}
 
 	vals := make([]reflect.Value, len(elems), len(elems))
@@ -29,7 +26,7 @@ func Merge(deep bool, elems ...interface{}) error {
 		if index == 0 {
 			typ = val.Type()
 		} else if typ != val.Type() {
-			return errors.New("参数拥有不同的类型")
+			panic("参数拥有不同的类型")
 		}
 
 		vals[index] = val
