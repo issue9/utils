@@ -20,7 +20,12 @@ func FileExists(path string) bool {
 //
 // 会对源代码作格式化。
 func DumpGoFile(path, content string) error {
-	src, err := format.Source([]byte(content))
+	return DumpGoSource(path, []byte(content))
+}
+
+// DumpGoSource 输出 Go 源码到 path
+func DumpGoSource(path string, content []byte) error {
+	src, err := format.Source(content)
 	if err != nil {
 		return err
 	}
