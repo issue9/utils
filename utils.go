@@ -1,6 +1,4 @@
-// Copyright 2016 by caixw, All rights reserved.
-// Use of this source code is governed by a MIT
-// license that can be found in the LICENSE file.
+// SPDX-License-Identifier: MIT
 
 // Package utils 一些常用的函数集合。
 package utils
