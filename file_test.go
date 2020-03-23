@@ -58,7 +58,7 @@ func TestCurrentFile(t *testing.T) {
 	filename, err := filepath.Abs("./file_test.go")
 	a.NotError(err).NotEmpty(filename)
 
-	a.Equal(CurrentFile(), filepath.FromSlash(filename))
+	a.Equal(CurrentFile(), filepath.ToSlash(filename))
 }
 
 func TestCurrentFunction(t *testing.T) {
