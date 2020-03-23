@@ -10,7 +10,7 @@ env:
 
 go:
   - tip
-  - 1.13.x
+  - 1.14.x
   - 1.11.x
 
 script:
@@ -22,4 +22,3 @@ after_success:
 matrix:
   allow_failures:
     - go: tip
-
