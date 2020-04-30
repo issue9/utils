@@ -12,7 +12,19 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+
+	"golang.org/x/text/language"
+
+	"github.com/issue9/utils/internal/syslocale"
 )
+
+// GetSystemLanguageTag 返回当前系统的本地化信息
+//
+// *nix 系统会使用 LANG 环境变量中的值，windows 在 LANG
+// 环境变量不存在的情况下，调用 GetUserDefaultLocaleName 函数获取。
+func GetSystemLanguageTag() (language.Tag, error) {
+	return syslocale.Get()
+}
 
 // MD5 将一段字符串转换成 md5 编码
 func MD5(str string) string {

@@ -38,10 +38,10 @@ func Merge(deep bool, elems ...interface{}) error {
 	return nil
 }
 
-// 将v1,v2合并，其中v2中的非零值将覆盖v1中对应的值。
+// 将 v1, v2 合并，其中 v2 中的非零值将覆盖 v1 中对应的值。
 // deep 是否将合并功能作用于成员变量。
-// 确保v1.Type()==v2.Type()
-// 若是map，则当作普通的成员变量，直接赋值。
+// 确保 v1.Type()==v2.Type()
+// 若是 map，则当作普通的成员变量，直接赋值。
 func merge(deep bool, v1, v2 reflect.Value) error {
 	if !v1.IsValid() || !v2.IsValid() {
 		return nil
