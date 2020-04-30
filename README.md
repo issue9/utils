@@ -28,7 +28,7 @@ go get github.com/issue9/utils
 ----
 
 [![Go Walker](http://gowalker.org/api/v1/badge)](http://gowalker.org/github.com/issue9/utils)
-[![GoDoc](https://godoc.org/github.com/issue9/utils?status.svg)](https://godoc.org/github.com/issue9/utils)
+[![go.dev reference](https://img.shields.io/badge/go.dev-reference-007d9c?logo=go&logoColor=white&style=flat-square)](https://pkg.go.dev/github.com/issue9/utils)
 
 版权
 ----
