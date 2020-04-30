@@ -20,11 +20,15 @@ func FileExists(path string) bool {
 // DumpGoFile 输出 Go 源代码到 path
 //
 // 会对源代码作格式化。
+//
+// Deprecated: 请使用 DumpGoSource 代替
 func DumpGoFile(path, content string) error {
 	return DumpGoSource(path, []byte(content))
 }
 
 // DumpGoSource 输出 Go 源码到 path
+//
+// 会对源代码作格式化。
 func DumpGoSource(path string, content []byte) error {
 	src, err := format.Source(content)
 	if err != nil {
