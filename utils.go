@@ -6,12 +6,10 @@ package utils
 import (
 	"crypto/md5"
 	"encoding/hex"
-	"fmt"
 	"os"
 	"path/filepath"
 	"runtime"
 	"strconv"
-	"strings"
 
 	"golang.org/x/text/language"
 
@@ -35,19 +33,10 @@ func MD5(str string) string {
 
 // TraceStack 返回调用者的堆栈信息
 func TraceStack(level int, msg ...interface{}) (string, error) {
-	var w strings.Builder
-	var err error
+	var w StringBuilder
 
 	if len(msg) > 0 {
-		if _, err = fmt.Fprintln(&w, msg...); err != nil {
-			return "", err
-		}
-	}
-
-	ws := func(str string) {
-		if err == nil {
-			_, err = w.WriteString(str)
-		}
+		w.Println(msg...)
 	}
 
 	for i := level; true; i++ {
@@ -56,14 +45,11 @@ func TraceStack(level int, msg ...interface{}) (string, error) {
 			break
 		}
 
-		ws(file)
-		ws(":")
-		ws(strconv.Itoa(line))
-		ws("\n")
+		w.WString(file).WByte(':').WString(strconv.Itoa(line)).WByte('\n')
 	}
 
-	if err != nil {
-		return "", err
+	if w.Err != nil {
+		return "", w.Err
 	}
 
 	return w.String(), nil
