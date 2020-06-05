@@ -10,6 +10,11 @@ import (
 	"github.com/issue9/assert"
 )
 
+func TestMD5(t *testing.T) {
+	a := assert.New(t)
+	a.Equal(32, len(MD5("123")))
+}
+
 func TestSplitPath(t *testing.T) {
 	a := assert.New(t)
 

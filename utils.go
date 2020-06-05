@@ -73,7 +73,7 @@ func SplitPath(path string) []string {
 			}
 			index = i + 1 // 过滤掉此符号
 		}
-	} // end for
+	}
 
 	if len(path) > index {
 		ret = append(ret, path[index:])
