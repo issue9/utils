@@ -11,6 +11,7 @@ import (
 	"runtime"
 	"strconv"
 
+	"github.com/issue9/errwrap"
 	"golang.org/x/text/language"
 
 	"github.com/issue9/utils/internal/syslocale"
@@ -33,7 +34,7 @@ func MD5(str string) string {
 
 // TraceStack 返回调用者的堆栈信息
 func TraceStack(level int, msg ...interface{}) (string, error) {
-	var w StringBuilder
+	var w errwrap.StringBuilder
 
 	if len(msg) > 0 {
 		w.Println(msg...)
