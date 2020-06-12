@@ -16,6 +16,7 @@ utils 包提供了一些常用的 Go 函数
 - CurrentDir 相当于部分语言的 `__DIR__`；
 - CurrentLine 相当于部分语言的 `__LINE__`；
 - CurrentFunction 相当于部分语言的 `__FUNCTION__`；
+- HasDuplication 检测数组是否包含重复的值；
 
 安装
 ----
