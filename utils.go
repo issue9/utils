@@ -6,8 +6,10 @@ package utils
 import (
 	"crypto/md5"
 	"encoding/hex"
+	"fmt"
 	"os"
 	"path/filepath"
+	"reflect"
 	"runtime"
 	"strconv"
 
@@ -81,4 +83,25 @@ func SplitPath(path string) []string {
 	}
 
 	return ret
+}
+
+// HasDuplication 检测数组中是否包含重复的值
+func HasDuplication(slice interface{}, eq func(i, j int) bool) int {
+	v := reflect.ValueOf(slice)
+	for v.Kind() == reflect.Ptr {
+		v = v.Elem()
+	}
+	if v.Kind() != reflect.Slice && v.Kind() != reflect.Array {
+		panic(fmt.Sprint("参数 slice 只能是 slice 或是 array"))
+	}
+
+	for i := 0; i < v.Len(); i++ {
+		for j := i + 1; j < v.Len(); j++ {
+			if eq(i, j) {
+				return j
+			}
+		}
+	}
+
+	return -1
 }
