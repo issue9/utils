@@ -86,6 +86,10 @@ func SplitPath(path string) []string {
 }
 
 // HasDuplication 检测数组中是否包含重复的值
+//
+// slice 需要检测的数组或是切片，其它类型会 panic；
+// eq 对比数组中两个值是否相等，相等需要返回 true；
+// 返回值表示存在相等值时，第二个值在数组中的下标值；
 func HasDuplication(slice interface{}, eq func(i, j int) bool) int {
 	v := reflect.ValueOf(slice)
 	for v.Kind() == reflect.Ptr {
