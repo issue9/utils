@@ -53,6 +53,18 @@ func TestHasDuplication(t *testing.T) {
 		return intSlice[i] == intSlice[j]
 	}))
 
+	// 空数组
+	intSlice = []int{}
+	a.Equal(-1, HasDuplication(intSlice, func(i, j int) bool {
+		return intSlice[i] == intSlice[j]
+	}))
+
+	// 空数组
+	intSlice = nil
+	a.Equal(-1, HasDuplication(intSlice, func(i, j int) bool {
+		return intSlice[i] == intSlice[j]
+	}))
+
 	intArray := [7]int{1, 2, 3, 7, 0, 4, 7}
 	a.Equal(6, HasDuplication(intArray, func(i, j int) bool {
 		return intArray[i] == intArray[j]
