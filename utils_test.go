@@ -58,6 +58,10 @@ func TestHasDuplication(t *testing.T) {
 		return intArray[i] == intArray[j]
 	}))
 
+	a.Equal(6, HasDuplication(&intArray, func(i, j int) bool {
+		return intArray[i] == intArray[j]
+	}))
+
 	stringSlice := []string{"a", "b", "0", "a"}
 	a.Equal(3, HasDuplication(stringSlice, func(i, j int) bool {
 		return stringSlice[i] == stringSlice[j]
