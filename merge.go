@@ -4,7 +4,9 @@ package utils
 
 import "reflect"
 
-// Merge 合并所有的元素，后一个元素的非零值将取代前一个元素中的值。
+// Merge 合并所有的元素
+//
+// 后一个元素的非零值将取代前一个元素中的值。
 // deep 是否递归合并子元素。
 // 合并的元素只支持结构体或是结构体指针。
 func Merge(deep bool, elems ...interface{}) error {
@@ -59,7 +61,7 @@ func merge(deep bool, v1, v2 reflect.Value) error {
 				continue
 			}
 
-			if v1.Field(i).IsNil() { // v1为nil时，需要先初始化该结构体
+			if v1.Field(i).IsNil() { // v1 为 nil 时，需要先初始化该结构体
 				if v2.Field(i).IsNil() { // 双方均为nil时，无须任何操作
 					continue
 				}
@@ -87,7 +89,7 @@ func merge(deep bool, v1, v2 reflect.Value) error {
 
 			}
 
-			// v2若是零值，则不合并
+			// v2 若是零值，则不合并
 			if v2.Field(i).Interface() == reflect.Zero(v2.Field(i).Type()).Interface() {
 				continue
 			}
