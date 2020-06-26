@@ -33,7 +33,7 @@ func MD5(str string) string {
 
 // TraceStack 返回调用者的堆栈信息
 func TraceStack(level int, msg ...interface{}) (string, error) {
-	return source.TraceStack(level, msg...)
+	return source.TraceStack(level+1, msg...)
 }
 
 // SplitPath 将路径按分隔符分隔成字符串数组。比如：
