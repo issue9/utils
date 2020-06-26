@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-// Package utils 一些常用的函数集合。
+// Package utils 一些常用功能的集合
 package utils
 
 import (
@@ -20,6 +20,8 @@ import (
 //
 // *nix 系统会使用 LANG 环境变量中的值，windows 在 LANG
 // 环境变量不存在的情况下，调用 GetUserDefaultLocaleName 函数获取。
+//
+// Deprecated: 请使用 localeutil.SystemLanguageTag 代替
 func GetSystemLanguageTag() (language.Tag, error) {
 	return localeutil.SystemLanguageTag()
 }
@@ -32,6 +34,8 @@ func MD5(str string) string {
 }
 
 // TraceStack 返回调用者的堆栈信息
+//
+// Deprecated: 请使用 source.TraceStack 代替
 func TraceStack(level int, msg ...interface{}) (string, error) {
 	return source.TraceStack(level+1, msg...)
 }

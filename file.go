@@ -29,13 +29,15 @@ func DumpGoFile(path, content string) error {
 // DumpGoSource 输出 Go 源码到 path
 //
 // 会对源代码作格式化。
+//
+// Deprecated: 请使用 source.DumpGoSource 代替
 func DumpGoSource(path string, content []byte) error {
 	return source.DumpGoSource(path, content)
 }
 
 // CurrentPath 获取`调用者`所在目录的路径
 //
-// 类似于部分语言的的 __DIR__ + "/" + path
+// Deprecated: 请使用 source.CurrentPath 代替
 func CurrentPath(path string) string {
 	_, fi, _, _ := runtime.Caller(1)
 	return filepath.Join(filepath.Dir(fi), path)
@@ -43,7 +45,7 @@ func CurrentPath(path string) string {
 
 // CurrentDir 获取`调用者`所在的目录
 //
-// 相当于部分语言的 __DIR__
+// Deprecated: 请使用 source.CurrentDir 代替
 func CurrentDir() string {
 	_, fi, _, _ := runtime.Caller(1)
 	return filepath.Dir(fi)
@@ -51,7 +53,7 @@ func CurrentDir() string {
 
 // CurrentFile 获取`调用者`所在的文件
 //
-// 相当于部分语言的 __FILE__
+// Deprecated: 请使用 source.CurrentFile 代替
 func CurrentFile() string {
 	_, fi, _, _ := runtime.Caller(1)
 	return fi
@@ -59,7 +61,7 @@ func CurrentFile() string {
 
 // CurrentLine 获取`调用者`所在的行
 //
-// 相当于部分语言的 __LINE__
+// Deprecated: 请使用 source.CurrentLine 代替
 func CurrentLine() int {
 	_, _, line, _ := runtime.Caller(1)
 	return line
@@ -67,7 +69,7 @@ func CurrentLine() int {
 
 // CurrentFunction 获取`调用者`所在的函数名
 //
-// 相当于部分语言的 __FUNCTION__
+// Deprecated: 请使用 source.CurrentFunction 代替
 func CurrentFunction() string {
 	pc, _, _, _ := runtime.Caller(1)
 	name := runtime.FuncForPC(pc).Name()
