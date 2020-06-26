@@ -10,11 +10,9 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
-	"runtime"
-	"strconv"
 
-	"github.com/issue9/errwrap"
 	"github.com/issue9/localeutil"
+	"github.com/issue9/source"
 	"golang.org/x/text/language"
 )
 
@@ -35,26 +33,7 @@ func MD5(str string) string {
 
 // TraceStack 返回调用者的堆栈信息
 func TraceStack(level int, msg ...interface{}) (string, error) {
-	var w errwrap.StringBuilder
-
-	if len(msg) > 0 {
-		w.Println(msg...)
-	}
-
-	for i := level; true; i++ {
-		_, file, line, ok := runtime.Caller(i)
-		if !ok {
-			break
-		}
-
-		w.WString(file).WByte(':').WString(strconv.Itoa(line)).WByte('\n')
-	}
-
-	if w.Err != nil {
-		return "", w.Err
-	}
-
-	return w.String(), nil
+	return source.TraceStack(level, msg...)
 }
 
 // SplitPath 将路径按分隔符分隔成字符串数组。比如：

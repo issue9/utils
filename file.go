@@ -3,12 +3,12 @@
 package utils
 
 import (
-	"go/format"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"runtime"
 	"strings"
+
+	"github.com/issue9/source"
 )
 
 // FileExists 判断文件或是文件夹是否存在
@@ -30,12 +30,7 @@ func DumpGoFile(path, content string) error {
 //
 // 会对源代码作格式化。
 func DumpGoSource(path string, content []byte) error {
-	src, err := format.Source(content)
-	if err != nil {
-		return err
-	}
-
-	return ioutil.WriteFile(path, src, os.ModePerm)
+	return source.DumpGoSource(path, content)
 }
 
 // CurrentPath 获取`调用者`所在目录的路径
