@@ -20,6 +20,7 @@ type s2 struct {
 	s1
 	S2 string
 	S3 *s1
+	S4 s1
 }
 
 func TestMerge(t *testing.T) {
@@ -49,6 +50,11 @@ func TestMerge(t *testing.T) {
 	a.Panic(func() {
 		Merge(true, v1, 5)
 	})
+
+	v4 := &s2{}
+	v5 := &s2{S4: s1{ID: 5}}
+	a.NotError(Merge(true, v4, v5))
+	a.Empty(v4.Value).Equal(v4.S4.ID, 5)
 }
 
 func TestMergeBase(t *testing.T) {
@@ -81,20 +87,20 @@ func TestMergeNest(t *testing.T) {
 	v1 := &s2{S2: "1", S3: &s1{}}
 	v2 := &s2{S2: "2", S3: &s1{ID: 2, hide: 2}}
 
-	// deep 为true时，会依次赋值子元素，hide不可导出，所以被忽略
+	// deep 为 true 时，会依次赋值子元素，hide 不可导出，所以被忽略
 	a.NotError(merge(true, reflect.ValueOf(v1).Elem(), reflect.ValueOf(v2).Elem()))
 	a.Equal(v1.ID, 0).Equal(v1.S3.ID, 2).Equal(v1.S3.hide, 0)
 
-	// deep为false时，会将整个v2.S3赋给给v1.S3
+	// deep为 false 时，会将整个 v2.S3 赋给给 v1.S3
 	a.NotError(merge(false, reflect.ValueOf(v1).Elem(), reflect.ValueOf(v2).Elem()))
 	a.Equal(v1.ID, 0).Equal(v1.S3.ID, 2).Equal(v1.S3.hide, 2)
 
-	// 自动初始化v1.S3
+	// 自动初始化 v1.S3
 	v1.S3 = nil
 	a.NotError(merge(true, reflect.ValueOf(v1).Elem(), reflect.ValueOf(v2).Elem()))
 	a.Equal(v1.ID, 0).Equal(v1.S3.ID, 2).Equal(v1.S3.hide, 0)
 
-	// 不会初始化v1.S3
+	// 不会初始化 v1.S3
 	v1.S3 = nil
 	v2.S3 = nil
 	a.NotError(merge(true, reflect.ValueOf(v1).Elem(), reflect.ValueOf(v2).Elem()))
@@ -115,7 +121,7 @@ func TestMergeSlice(t *testing.T) {
 	a.NotError(merge(true, reflect.ValueOf(v1).Elem(), reflect.ValueOf(v2).Elem()))
 	a.Equal(v1.Slice, []int{1, 1})
 
-	// 长度为0
+	// 长度为 0
 	v2.Slice = []int{}
 	a.NotError(merge(true, reflect.ValueOf(v1).Elem(), reflect.ValueOf(v2).Elem()))
 	a.Equal(v1.Slice, []int{1, 1})
