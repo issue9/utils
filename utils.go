@@ -6,13 +6,13 @@ package utils
 import (
 	"crypto/md5"
 	"encoding/hex"
-	"fmt"
 	"os"
 	"path/filepath"
-	"reflect"
 
 	"github.com/issue9/localeutil"
+	"github.com/issue9/sliceutil"
 	"github.com/issue9/source"
+
 	"golang.org/x/text/language"
 )
 
@@ -73,21 +73,5 @@ func SplitPath(path string) []string {
 // eq 对比数组中两个值是否相等，相等需要返回 true；
 // 返回值表示存在相等值时，第二个值在数组中的下标值；
 func HasDuplication(slice interface{}, eq func(i, j int) bool) int {
-	v := reflect.ValueOf(slice)
-	for v.Kind() == reflect.Ptr {
-		v = v.Elem()
-	}
-	if v.Kind() != reflect.Slice && v.Kind() != reflect.Array {
-		panic(fmt.Sprint("参数 slice 只能是 slice 或是 array"))
-	}
-
-	for i := 0; i < v.Len(); i++ {
-		for j := i + 1; j < v.Len(); j++ {
-			if eq(i, j) {
-				return j
-			}
-		}
-	}
-
-	return -1
+	return sliceutil.Dup(slice, eq)
 }
