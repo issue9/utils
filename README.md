@@ -5,17 +5,29 @@ utils
 [![codecov](https://codecov.io/gh/issue9/utils/branch/master/graph/badge.svg)](https://codecov.io/gh/issue9/utils)
 ======
 
+*此模块不再更新，部分功能分拆至 sliceutil、localeutil 和 source 三个模块中*
+
+
 utils 包提供了一些常用的 Go 函数
 
 - MD5 生成 md5 编码；
 - FileExists 判断文件或是目录是否存在；
 - Merge 合并多个同类型的数据；
+
+[localeutil](https://github.com/issue9/localeutil):
+
 - GetSystemLanguageTag 获取当前系统的本地化信息；
+
+[source](https://github.com/issue9/source):
+
 - DumpGoSource 输出并格式化 Go 的源代码；
 - CurrentFile 相当于部分语言的 `__FILE__`；
 - CurrentDir 相当于部分语言的 `__DIR__`；
 - CurrentLine 相当于部分语言的 `__LINE__`；
 - CurrentFunction 相当于部分语言的 `__FUNCTION__`；
+
+[slliceutil](https://github.com/issue9/sliceutil):
+
 - HasDuplication 检测数组是否包含重复的值；
 
 安装
